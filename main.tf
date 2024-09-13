@@ -74,7 +74,7 @@ resource "random_string" "random" {
   min_numeric = 4
   keepers = {
     id                     = module.this.id
-    traffic_routing_config = jsondecode([var.traffic_routing_config])
+    traffic_routing_config = jsonencode(var.traffic_routing_config)
   }
 }
 
