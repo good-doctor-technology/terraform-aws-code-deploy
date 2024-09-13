@@ -106,6 +106,10 @@ resource "aws_codedeploy_deployment_config" "default" {
       }
     }
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_codedeploy_deployment_group" "default" {
