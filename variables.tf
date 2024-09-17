@@ -23,8 +23,8 @@ variable "minimum_healthy_hosts" {
 variable "traffic_routing_config" {
   type = object({
     type       = string
-    interval   = number
-    percentage = number
+    interval   = optional(number)
+    percentage = optional(number)
   })
   default     = null
   description = <<-DOC
