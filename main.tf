@@ -68,9 +68,19 @@ resource "aws_codedeploy_app" "default" {
   tags = module.this.tags
 }
 
+resource "random_string" "random" {
+  length      = 4
+  numeric     = true
+  min_numeric = 4
+  keepers = {
+    id                     = module.this.id
+    traffic_routing_config = jsonencode(var.traffic_routing_config)
+  }
+}
+
 resource "aws_codedeploy_deployment_config" "default" {
   count                  = local.count
-  deployment_config_name = module.this.id
+  deployment_config_name = format("%s-%s", module.this.id, random_string.random.result)
   compute_platform       = var.compute_platform
 
   dynamic "minimum_healthy_hosts" {
@@ -105,6 +115,10 @@ resource "aws_codedeploy_deployment_config" "default" {
         }
       }
     }
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
