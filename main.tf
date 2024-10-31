@@ -285,7 +285,7 @@ resource "aws_codedeploy_deployment_group" "default" {
           }
 
           dynamic "test_traffic_route" {
-            for_each = lookup(target_group_pair_info.value, "test_traffic_route", null) == null ? [] : target_group_pair_info.value.test_traffic_route
+            for_each = lookup(target_group_pair_info.value, "test_traffic_route", null) == null ? [] : [target_group_pair_info.value.test_traffic_route]
 
             content {
               listener_arns = test_traffic_route.value.listener_arns
